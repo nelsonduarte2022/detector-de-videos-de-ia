@@ -1,0 +1,100 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Data files (large datasets) - NO SUBIR A GITHUB
+data/
+data/raw/
+data/processed/
+data/train/
+data/val/
+data/test/
+data/train_small/
+data/val_small/
+*.zip
+archive.zip
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.h264
+*.h265
+
+# Model files (large)
+models/checkpoints/*.pth
+models/checkpoints/*.pt
+models/*.pth
+models/*.pt
+!models/best_model.pth  # Keep best model
+
+# Logs and tracking
+logs/
+runs/
+mlruns/
+wandb/
+*.log
+tensorboard_logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Docker
+*.tar
+docker-compose.override.yml
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# DVC
+.dvc/cache/
