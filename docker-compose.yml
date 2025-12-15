@@ -1,0 +1,30 @@
+# Docker Compose para DeepFakeShield
+version: '3.8'
+
+services:
+  deepfake-shield:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: deepfake-shield-app
+    ports:
+      - "5000:5000"
+    volumes:
+      # Persistir checkpoints y uploads
+      - ./checkpoints:/app/checkpoints
+      - ./uploads:/app/uploads
+      - ./dataset_frames:/app/dataset_frames
+    environment:
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  default:
+    name: deepfake-network

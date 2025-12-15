@@ -1,55 +1,49 @@
 """
-Script para crear un modelo demo pre-inicializado para pruebas rápidas.
-Este modelo NO está entrenado, pero permite probar el pipeline completo.
+Script para crear un modelo demo sin entrenamiento
+Útil para probar la aplicación web sin entrenar
 """
 
 import torch
 import torch.nn as nn
 from pathlib import Path
-import sys
-
-# Añadir src al path
-sys.path.insert(0, str(Path(__file__).parent / 'src'))
-
-from models.cnn import get_model
 
 
-def create_demo_model(output_path: str = "checkpoints/demo_model.pth"):
-    """
-    Crea un modelo demo con pesos aleatorios para pruebas.
+def create_demo_model():
+    """Crea un modelo demo inicializado aleatoriamente"""
+    print("="*70)
+    print("🤖 Creando Modelo Demo")
+    print("="*70)
     
-    Args:
-        output_path: Ruta donde guardar el modelo
-    """
-    print("🔧 Creando modelo demo EfficientNet-B4...")
+    # Importar el modelo
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent / 'src'))
+    from models.cnn import get_model
     
     # Crear modelo
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print("\n📦 Creando EfficientNet-B4...")
     model = get_model('efficientnet_b4', pretrained=True)
-    model = model.to(device)
     
-    # Crear checkpoint con la estructura correcta
-    checkpoint = {
+    # Crear directorio de checkpoints
+    checkpoint_dir = Path('checkpoints')
+    checkpoint_dir.mkdir(exist_ok=True)
+    
+    # Guardar modelo
+    checkpoint_path = checkpoint_dir / 'demo_model.pth'
+    
+    print(f"\n💾 Guardando modelo en {checkpoint_path}...")
+    torch.save({
         'model_state_dict': model.state_dict(),
         'epoch': 0,
         'model_name': 'efficientnet_b4',
-        'val_accuracy': 0.85,  # Valor demo
-        'optimizer_state_dict': None,
-        'train_loss': 0.3,
-        'val_loss': 0.35
-    }
+        'val_accuracy': 0.0,
+    }, checkpoint_path)
     
-    # Crear directorio si no existe
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    
-    # Guardar modelo
-    torch.save(checkpoint, output_path)
-    
-    print(f"✅ Modelo demo guardado en: {output_path}")
-    print(f"📊 Dispositivo: {device}")
-    print(f"🔢 Parámetros: {sum(p.numel() for p in model.parameters()):,}")
-    print("\n⚠️  NOTA: Este modelo usa pesos pre-entrenados de ImageNet.")
-    print("   Para detección real de deepfakes, entrena con: python src/train.py\n")
+    print(f"\n✅ Modelo demo creado exitosamente!")
+    print(f"📍 Ubicación: {checkpoint_path.absolute()}")
+    print("\n⚠️  NOTA: Este es un modelo demo sin entrenar.")
+    print("   Para obtener predicciones reales, entrena el modelo con:")
+    print("   python src/train.py")
+    print("="*70)
 
 
 if __name__ == "__main__":
