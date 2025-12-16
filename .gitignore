@@ -45,6 +45,8 @@ data/val/
 data/test/
 data/train_small/
 data/val_small/
+dataset/
+dataset_frames/
 *.zip
 archive.zip
 *.mp4
@@ -53,13 +55,23 @@ archive.zip
 *.mkv
 *.h264
 *.h265
+*.webm
+*.jpg
+*.jpeg
+*.png
 
 # Model files (large)
+checkpoints/
 models/checkpoints/*.pth
 models/checkpoints/*.pt
 models/*.pth
 models/*.pt
+*.pth
+*.pt
 !models/best_model.pth  # Keep best model
+
+# Uploads folder
+uploads/
 
 # Logs and tracking
 logs/
